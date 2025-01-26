@@ -7,6 +7,13 @@ Daje::Workflow::Savefile::Activity - It's tool to save a n array of files
 
     use Daje::Workflow::Savefile::Activity;
 
+     "activity_data": {
+              "file" : {
+                "target_dir_tag": "sql_target_dir",
+                "filetype": ".sql",
+                "file_list_tag": "sql"
+              }
+
 # DESCRIPTION
 
 Daje::Workflow::Savefile::Activity is a file saver
