@@ -42,7 +42,7 @@ use Mojo::Base 'Daje::Workflow::Common::Activity::Base', -base, -signatures;
 
 use Mojo::File;
 
-our $VERSION = "1.01";
+our $VERSION = "1.02";
 
 
 
@@ -54,14 +54,24 @@ sub save($self) {
         my $length = scalar @{$files};
         for (my $i = 0; $i < $length; $i++) {
             my $file = $filepath . @{$files}[$i]->{file} . $self->activity_data->{file}->{filetype};
-            open(my $fh, ">", $file);
-            print $fh @{$files}[$i]->{data};
-            close $fh;
+            if (exists @{$files}[$i]->{new_only} and @{$files}[$i]->{new_only} == 1) {
+                if (!-e $file) {
+                    $self->_save_file($file, @{$files}[$i]->{data});
+                }
+            } else {
+                $self->_save_file($file, @{$files}[$i]->{data});
+            }
         }
     };
     $self->error->add_error($@) if defined $@ and length($@) > 0;
 
     return;
+}
+
+sub _save_file($self, $file, $data) {
+    open(my $fh, ">", $file);
+    print $fh $data;
+    close $fh;
 }
 
 1;

@@ -2,5 +2,6 @@ Revision history for Perl extension Daje-Workflow-Savefile-Activity
 
 {{$NEXT}}
 
+    - Added possibility to check if file exits and should not be replaced
     - original version
 
